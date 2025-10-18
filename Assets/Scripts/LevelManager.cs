@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor;
+using Unity.AI.Navigation;
 
 public class LevelManager : MonoBehaviour
 {
@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     private int currentPrefabIndex;
     private int seed;
     [SerializeField] private Transform targetReference;
+    [SerializeField] private NavMeshSurface navmesh;
 
     private void Awake()
     {
@@ -34,7 +35,14 @@ public class LevelManager : MonoBehaviour
             currentPrefabIndex = 0;
         }
         transform.position+= new Vector3(0, 0, 10f);
-
+        if(navmesh.navMeshData!=null)
+        {
+            navmesh.UpdateNavMesh(navmesh.navMeshData);
+        }
+        else
+        {
+            navmesh.BuildNavMesh();
+        }
     }
 
 
